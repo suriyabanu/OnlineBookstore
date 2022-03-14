@@ -1,10 +1,11 @@
-package com.booksLandApp;
+package com.OnlineBookShop;
 
 import java.sql.ResultSet;
+
 import java.util.Scanner;
 
-import com.booksLandApp.dao.AdminOperations;
-import com.booksLandApp.dao.UserOperation;
+import com.OnlineBookShop.dao.AdminOperations;
+import com.OnlineBookShop.dao.UserOperation;
 
 public class App {
 	public static void main(String[] args) {
@@ -14,55 +15,69 @@ public class App {
 		boolean status = true;
 		try {
 			do {
-				System.out.println("*******************************");
-				System.out.println("          OnlineBookstore          ");
-				System.out.println("*******************************");
-				System.out.println("1-> ADMIN");
+				System.out.println("   _________________________________");
+				System.out.println();
+				System.out.println("        Online Book Shop     ");
+				System.out.println("   _________________________________");
+
+				System.out.println("1-> ADMIN ");
 				System.out.println("2-> CUSTOMER");
 				int op = sc.nextInt();
 				if (op == 1) {
-					System.out.println("Please Enter UserName");
-					String username = sc.next();
+					System.out.println("Please Enter Login_Id");
+					String Login_Id = sc.next();
 					System.out.println("Please Enter password");
 					String Password = sc.next();
 
-					if (aob.login(username, Password)) {
-						System.out.println("=======================================================================");
-						System.out.println("                       Logged in successfully!!             ");
-						System.out.println("=======================================================================");
-						System.out.println("1.Show Books\r\n" + "2.Add Books\r\n" + "3.Remove Books\r\n"
-								+ "4.Log Out\r\n");
+					if (aob.login(Login_Id, Password)) {
+						System.out.println("-----------------------------------------------------------");
+						System.out.println("Login successfully!!");
+						System.out.println("-----------------------------------------------------------");
+						System.out.println("1.view Books\r\n" + "2.Add Books\r\n" + "3.Remove Books\r\n"
+								+ "4.Profile Setting\r\n" + "5.Log Out\r\n");
 						int op1 = sc.nextInt();
 						if (op1 == 1) {
-							aob.showBooks();
+							aob.viewBooks();
 						} else if (op1 == 2) {
-							System.out.println("Enter Book code:");
-							String bc = sc.next();
+							System.out.println("Enter Book Serialno:");
+							String bsno = sc.next();
 							System.out.println("Enter BookName:");
 							String bname = sc.next();
 							System.out.println("Enter Book AuthorName:");
-							String authorname = sc.next();
+							String aname = sc.next();
 							System.out.println("Enter pages of book ");
 							int pg = sc.nextInt();
-							System.out.println("Enter Price of Book:");
-							double price = sc.nextDouble();
-							System.out.println("Enter stock of book:");
-							int qty = sc.nextInt();
-							if (aob.AddBook(bc, bname, authorname, pg, price, qty)) {
-								System.out.println("item added successfully");
+							System.out.println("Enter stock of Book:");
+							int st = sc.nextInt();
+							System.out.println("Enter amount of book:");
+							int amt = sc.nextInt();
+							if (aob.AddBooks(bsno, bname, aname, pg, st, amt)) {
+								System.out.println("Book added successfully");
 							} else {
 								System.out.println("Something went wrong");
 							}
 
 						} else if (op1 == 3) {
-							System.out.println("Please Enter the Book Code to Remove the Book");
-							String bc = sc.next();
-							if (aob.removeBooks(bc)) {
-								System.out.println("Item Removed Successfully");
+							System.out.println("Please Enter the Book Serial Number to Remove the Book");
+							String bsno = sc.next();
+							if (aob.delete(bsno)) {
+								System.out.println("Book Removed Successfully");
 							} else {
-								System.out.println("Please Enter The Correct Book ID");
+								System.out.println("Please Enter The Correct Book Serial Number");
 							}
-						}  else if (op1 == 4) {
+						} else if (op1 == 4) {
+							System.out.println("Please enter your Employee ID");
+							String eid = sc.next();
+							System.out.println("Please Provide new Login_Id");
+							String lid = sc.next();
+							System.out.println("Please provide new Password");
+							String np = sc.next();
+							if (aob.profileSetting(eid, lid, np)) {
+								System.out.println("Updated Successfully");
+							} else {
+								System.out.println("Problem in Update");
+							}
+						} else if (op1 == 5) {
 							if (aob.logout()) {
 								status = false;
 								System.out.println("Logged Out");
@@ -71,7 +86,7 @@ public class App {
 						}
 
 					} else {
-						System.out.println("Username or Password is incorrect");
+						System.out.println("Login_Id or Password is incorrect");
 					}
 
 				} else if (op == 2) {
@@ -79,95 +94,118 @@ public class App {
 					System.out.println("2->sign in (If already a customer)");
 					int op2 = sc.nextInt();
 					if (op2 == 1) {
-						System.out.println("Please Enter the User Name");
-						String us = sc.next();
+						System.out.println("Please Enter the Login_Id");
+						String lid = sc.next();
 						System.out.println("Please Enter the Password");
-						String pass = sc.next();
+						String pwd = sc.next();
 						System.out.println("Please Enter the Name");
 						String name = sc.next();
+						System.out.println("Please Enter the location");
+						String loc = sc.next();
 						System.out.println("Please Enter the address");
 						String add = sc.next();
-						System.out.println("Please Enter the LandMark");
-						String lm = sc.next();
-						System.out.println("Please Enter the Mobile Number");
-						long num = sc.nextLong();
 						System.out.println("Please Enter the E-Mail");
 						String em = sc.next();
-						if (up.signUp(us, pass, name, add, lm, num, em)) {
+						System.out.println("Please Enter the Mobile Number");
+						long num = sc.nextLong();
+
+						if (up.signUp(lid, pwd, name, add, loc, em, num)) {
 							System.out.println("Sign up successfully");
 						} else {
 							System.out.println("Problem in Sign Up");
 						}
 					} else if (op2 == 2) {
-						System.out.println("Please Enter UserName");
-						String username = sc.next();
+						System.out.println("Please Enter Login_Id");
+						String lid = sc.next();
 						System.out.println("Please Enter password");
-						String Password = sc.next();
-						if (up.login(username, Password)) {
-							System.out
-									.println("=======================================================================");
-							System.out.println("                       Login successfull!!                   ");
-							System.out
-									.println("=======================================================================");
-							up.showBooks();
-							System.out.println("1.Buy Book\r\n"+"2.Order Status\r\n"+"3.Update Profile"+"4.LogOut");
+						String Pwd = sc.next();
+						if (up.login(lid, Pwd)) {
+							System.out.println("************************************************");
+							System.out.println("Login successfull!!");
+							System.out.println("************************************************");
+							System.out.println("1.View Books\r\n" + "2.Add To Cart\r\n" + "3.View Cart\r\n"
+									+ "4.Profile Setting\r\n" + "5.Log Out\r\n");
 							int op3 = sc.nextInt();
 							if (op3 == 1) {
-
-								System.out.println("Please Enter The BookCode");
-								String bc = sc.next();
-								System.out.println("Please Enter the Bookname");
-								String bn = sc.next();
+								up.viewBooks();
+							} else if (op3 == 2) {
+								up.viewBooks();
+								System.out.println("Please Enter the Book Serial Number");
+								String bsno = sc.next();
 								System.out.println("Please Enter the Quantity");
 								int qty = sc.nextInt();
-								System.out.println("Please Enter the Delivery Address");
-								String address = sc.next();
-								if (up.buyNow(bc, bn, qty, address)) {
-									System.out.println("Order Successfully Placed");
-								} else {
-									System.out.println("Problem in Placing Order");
-								}
-							} 
-							
-								 else if (op3 == 2) {
-									
 
-								
+								if (up.addToCart(bsno, qty)) {
+									System.out.println("book Added Successfully!!!");
+								} else {
+									System.out.println("Problem in Adding Item to Cart");
+								}
 							} else if (op3 == 3) {
-								System.out.println("Please Enter the User Name");
-								String us = sc.next();
+								up.viewCart();
+								System.out.println("1->Buy now");
+								System.out.println("2->Empty Cart");
+								int op4 = sc.nextInt();
+								if (op4 == 1) {
+									System.out.println("Please Enter The BookSerialNumber");
+									String bsno = sc.next();
+									System.out.println("Please Enter the Bookname");
+									String bn = sc.next();
+									System.out.println("Please Enter the Quantity");
+									int qty = sc.nextInt();
+									System.out.println("Please Enter the Delivery Address");
+									String address = sc.next();
+									if (up.orderNow(bsno, bn, qty, address)) {
+										System.out.println("Order Successfully Placed");
+									} else {
+										System.out.println("Problem in Placing Order");
+									}
+								} else if (op4 == 2) {
+									System.out.println("Enter the Book Serial Number TO Delete Book From Cart:");
+									String bsno = sc.next();
+									if (up.emptyCart(bsno))
+
+										System.out.println("Successfully Removed BookIn Cart!!");
+									else
+										System.out.println("Problems in Removing Book from Cart");
+
+								}
+							} else if (op3 == 4) {
+								System.out.println("Please Enter the Login_Id");
+								String lid1 = sc.next();
 								System.out.println("Please Enter the Password");
-								String pass = sc.next();
+								String pwd = sc.next();
 								System.out.println("Please Enter the Name");
 								String name = sc.next();
+								System.out.println("Please Enter the Location");
+								String loc = sc.next();
 								System.out.println("Please Enter the address");
 								String add = sc.next();
-								System.out.println("Please Enter the LandMark");
-								String lm = sc.next();
-								System.out.println("Please Enter the Mobile Number");
-								long num = sc.nextLong();
+
 								System.out.println("Please Enter the E-Mail");
 								String em = sc.next();
-								if (up.profileSetting(us, pass, name, add, lm, num, em)) {
-									System.out.println("Updated successfully");
+								System.out.println("Please Enter the Mobile Number");
+								long num = sc.nextLong();
+
+								if (up.profileSetting(lid1, pwd, name, add, loc, em, num)) {
+									System.out.println("Sign up successfully");
 								} else {
-									System.out.println("Problem in Updating Profile");
+									System.out.println("Problem in Sign Up");
 								}
 
-							} 
-							else if (op3==4) {
+							} else if (op3 == 5) {
 								if (up.logout()) {
-									status = false;
-									System.out.println("Logged Out");
+									System.out.println("Logged Out Successfully!!");
+								} else {
+									System.out.println("Problem in Log Out");
 								}
 							}
 						} else {
 							System.out.println("Problem in Login");
 						}
 					}
+
 				}
-				}
-			 while (status);
+			} while (status);
 		} catch (Exception e) {
 			System.out.println("Wrong data!!");
 		}
