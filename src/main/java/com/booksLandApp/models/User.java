@@ -1,73 +1,93 @@
-package com.booksLandApp.models;
+package com.OnlineBookShop.models;
 
-public class User {
-String username;
+public class Customer {
+String Login_Id;
 String password;
 String name;
+String location;
 String address;
-String landmark;
+String mail;
 Long mobile;
-String email;
-public User() {
+
+public Customer() {
 	super();
 	
 }
-public User(String username, String password, String name, String address, String landmark, Long mobile, String email) {
+
+public Customer(String login_Id, String password, String name, String location, String address, String mail,
+		Long mobile) {
 	super();
-	this.username = username;
+	Login_Id = login_Id;
 	this.password = password;
 	this.name = name;
+	this.location = location;
 	this.address = address;
-	this.landmark = landmark;
+	this.mail = mail;
 	this.mobile = mobile;
-	this.email = email;
 }
+
 @Override
 public String toString() {
-	return "User [username=" + username + ", password=" + password + ", name=" + name + ", address=" + address
-			+ ", landmark=" + landmark + ", mobile=" + mobile + ", email=" + email + "]";
+	return "Customer [Login_Id=" + Login_Id + ", password=" + password + ", name=" + name + ", location=" + location
+			+ ", address=" + address + ", mail=" + mail + ", mobile=" + mobile + "]";
 }
-public String getUsername() {
-	return username;
+
+public String getLogin_Id() {
+	return Login_Id;
 }
-public void setUsername(String username) {
-	this.username = username;
+
+public void setLogin_Id(String login_Id) {
+	Login_Id = login_Id;
 }
+
 public String getPassword() {
 	return password;
 }
+
 public void setPassword(String password) {
 	this.password = password;
 }
+
 public String getName() {
 	return name;
 }
+
 public void setName(String name) {
 	this.name = name;
 }
+
+public String getLocation() {
+	return location;
+}
+
+public void setLocation(String location) {
+	this.location = location;
+}
+
 public String getAddress() {
 	return address;
 }
+
 public void setAddress(String address) {
 	this.address = address;
 }
-public String getLandmark() {
-	return landmark;
+
+public String getMail() {
+	return mail;
 }
-public void setLandmark(String landmark) {
-	this.landmark = landmark;
+
+public void setMail(String mail) {
+	this.mail = mail;
 }
+
 public Long getMobile() {
 	return mobile;
 }
+
 public void setMobile(Long mobile) {
 	this.mobile = mobile;
 }
-public String getEmail() {
-	return email;
-}
-public void setEmail(String email) {
-	this.email = email;
-}
+
+
 
 }
