@@ -1,7 +1,7 @@
-package com.booksLandApp.models;
+package com.OnlineBookShop.models;
 
 public class Admin {
-String username;
+String Login_Id;
 String password;
 String name;
 String empId;
@@ -9,22 +9,22 @@ public Admin() {
 	super();
 	
 }
-public Admin(String username, String password, String name, String empId) {
+public Admin(String Login_Id, String password, String name, String empId) {
 	super();
-	this.username = username;
-	this.password = password;
+	this.Login_Id = Login_Id;
+    this.password = password;
 	this.name = name;
 	this.empId = empId;
 }
 @Override
 public String toString() {
-	return "Admin [username=" + username + ", password=" + password + ", name=" + name + ", empId=" + empId + "]";
+	return "Admin [Login_Id=" + Login_Id + ", password=" + password + ", name=" + name + ", empId=" + empId + "]";
 }
-public String getUsername() {
-	return username;
+public String getLogin_Id() {
+	return Login_Id;
 }
-public void setUsername(String username) {
-	this.username = username;
+public void setLogin_Id(String login_Id) {
+	Login_Id = login_Id;
 }
 public String getPassword() {
 	return password;
